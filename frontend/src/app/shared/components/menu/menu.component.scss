@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+.menu {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 2rem;
+  height: 100%;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 0.5rem;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-menu);
+  text-decoration: none;
+  border-bottom: 10px solid transparent;
+
+  &.active {
+    border-bottom-color: var(--color-primary);
+  }
+}
