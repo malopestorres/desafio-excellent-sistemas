@@ -6,6 +6,7 @@ import {
   Entity,
   OneToMany,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { ProductImage } from './product-image.entity.js';
 
 @Entity('products')
@@ -22,11 +23,11 @@ export class Product {
   @Column({ type: 'int', nullable: false, default: 0 })
   stock: number;
 
-  @OneToMany(() => ProductImage, (image) => image.productId, {
+  @OneToMany(() => ProductImage, (image) => image.product, {
     cascade: ['insert', 'update', 'remove'],
     eager: true,
   })
-  images: ProductImage[];
+  images: Relation<ProductImage[]>;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
