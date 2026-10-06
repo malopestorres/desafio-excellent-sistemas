@@ -22,7 +22,7 @@ export class Product {
   @Column({ type: 'int', nullable: false, default: 0 })
   stock: number;
 
-  @OneToMany(() => ProductImage, (image) => image.product, {
+  @OneToMany(() => ProductImage, (image) => image.productId, {
     cascade: ['insert', 'update', 'remove'],
     eager: true,
   })
