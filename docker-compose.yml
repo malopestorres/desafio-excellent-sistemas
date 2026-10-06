@@ -37,6 +37,31 @@ services:
     networks:
       - desafio-network
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: desafio-backend
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: ${BACKEND_PORT:-3000}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: ${POSTGRES_PORT:-5432}
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_NAME: ${POSTGRES_DB:-desafio_excellent}
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - desafio-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - /app/dist
+
 volumes:
   postgres_data:
   pgadmin_data:
