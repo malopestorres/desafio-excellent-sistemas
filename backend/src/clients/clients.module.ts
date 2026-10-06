@@ -7,12 +7,9 @@ import { ClientsService } from './clients.service.js';
 import { CnpjService } from './cnpj.service.js';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Client]),  // Registra a entidade Client
-    HttpModule,                          // Habilita HttpService (axios)
-  ],
-  controllers: [ClientsController],      // Registra o controller
-  providers: [ClientsService, CnpjService], // Registra os services
-  exports: [ClientsService],             // Exporta para outros módulos usarem
+  imports: [TypeOrmModule.forFeature([Client]), HttpModule],
+  controllers: [ClientsController],
+  providers: [ClientsService, CnpjService],
+  exports: [ClientsService],
 })
 export class ClientsModule {}
