@@ -1,0 +1,175 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--color-page-bg);
+}
+
+.container {
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0 2.5rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .title-bar {
+    width: 6px;
+    height: 67px;
+    background-color: var(--color-primary);
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-title);
+  }
+
+  .back-link {
+    margin-left: auto;
+    color: #596370;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.form {
+  width: 1152px;
+  max-width: 100%;
+  margin-top: 1.5rem;
+}
+
+.row {
+  margin-bottom: 1.25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.row-half {
+  display: flex;
+  gap: 16px;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.field-material {
+  width: 100%;
+}
+
+:host ::ng-deep .field-material {
+  --mdc-outlined-text-field-outline-color: #d1d5db;
+  --mdc-outlined-text-field-hover-outline-color: #a7adb5;
+  --mdc-outlined-text-field-focus-outline-color: var(--color-primary);
+  --mdc-outlined-text-field-input-text-color: #111827;
+
+  .mat-mdc-form-field-infix {
+    min-height: 44px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    height: 44px;
+    border-radius: 6px;
+  }
+
+  .mat-mdc-notched-outline {
+    border-radius: 6px;
+
+    .mdc-notched-outline__leading {
+      width: 8px;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+
+    .mdc-notched-outline__trailing {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+  }
+
+  .mdc-text-field__input {
+    font-size: 14px;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+}
+
+.cnpj-line {
+  display: flex;
+  gap: 12px;
+
+  .field-material {
+    flex: 1;
+  }
+}
+
+.row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 2.5rem;
+}
+
+.btn-buscar,
+.btn-save {
+  height: 44px;
+  background-color: var(--color-primary) !important;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  --mat-filled-button-hover-state-layer-color: transparent;
+
+  &:hover {
+    background-color: var(--color-primary-dark) !important;
+  }
+}
+
+.btn-buscar {
+  width: 99px;
+}
+
+.btn-save {
+  min-width: 96px;
+}
+
+.btn-cancel {
+  height: 44px;
+  min-width: 119px;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  border-color: #d1d5db !important;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  --mat-outlined-button-hover-state-layer-color: transparent;
+
+  &:hover {
+    background-color: var(--color-table-header-bg) !important;
+  }
+}

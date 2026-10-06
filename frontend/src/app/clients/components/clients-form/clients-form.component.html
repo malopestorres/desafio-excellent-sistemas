@@ -1,0 +1,53 @@
+<app-header />
+
+<main class="container">
+  <div class="page-header">
+    <span class="title-bar"></span>
+    <h1 class="page-title">Cadastro de Clientes</h1>
+
+    <span class="back-link" (click)="cancel()">← Voltar</span>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <div class="field">
+        <label class="field-label" for="cnpj">CNPJ</label>
+        <div class="cnpj-line">
+          <mat-form-field appearance="outline" class="field-material">
+            <input
+              matInput
+              id="cnpj"
+              type="text"
+              formControlName="cnpj"
+              placeholder="00.000.000/0000-00"
+            />
+          </mat-form-field>
+          <button type="button" mat-flat-button class="btn-buscar" (click)="searchCnpj()">
+            BUSCAR
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-half">
+      <div class="field">
+        <label class="field-label" for="companyName">RAZÃO SOCIAL</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <input matInput id="companyName" type="text" formControlName="companyName" />
+        </mat-form-field>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="email">E-MAIL</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <input matInput id="email" type="email" formControlName="email" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row row-actions">
+      <button type="button" mat-stroked-button class="btn-cancel" (click)="cancel()">CANCELAR</button>
+      <button type="submit" mat-flat-button class="btn-save">SALVAR</button>
+    </div>
+  </form>
+</main>
