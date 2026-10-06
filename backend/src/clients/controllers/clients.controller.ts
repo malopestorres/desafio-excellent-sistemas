@@ -10,10 +10,10 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ClientsService } from './clients.service.js';
-import { CreateClientDto } from './dto/create-client.dto.js';
-import { UpdateClientDto } from './dto/update-client.dto.js';
-import { Client } from './entities/client.entity.js';
+import { ClientsService } from '../services/clients.service.js';
+import { CreateClientDto } from '../dto/create-client.dto.js';
+import { UpdateClientDto } from '../dto/update-client.dto.js';
+import { Client } from '../entities/client.entity.js';
 
 @Controller('clients')
 export class ClientsController {

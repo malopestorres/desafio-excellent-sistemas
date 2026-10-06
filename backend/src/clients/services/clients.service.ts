@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Client } from './entities/client.entity.js';
-import { CreateClientDto } from './dto/create-client.dto.js';
-import { UpdateClientDto } from './dto/update-client.dto.js';
+import { Client } from '../entities/client.entity.js';
+import { CreateClientDto } from '../dto/create-client.dto.js';
+import { UpdateClientDto } from '../dto/update-client.dto.js';
 import { CnpjService } from './cnpj.service.js';
 
 @Injectable()
