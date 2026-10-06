@@ -62,6 +62,20 @@ services:
       - /app/node_modules
       - /app/dist
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: desafio-frontend
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+    ports:
+      - "${FRONTEND_PORT:-4200}:80"
+    depends_on:
+      - backend
+    networks:
+      - desafio-network
+
 volumes:
   postgres_data:
   pgadmin_data:
