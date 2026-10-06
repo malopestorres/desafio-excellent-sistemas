@@ -1,0 +1,51 @@
+<app-header />
+
+<main class="container">
+  <div class="page-header">
+    <span class="title-bar"></span>
+    <h1 class="page-title">Produtos</h1>
+
+    <div class="actions">
+      <button mat-flat-button class="btn-new" (click)="navigateToForm()">+ NOVO PRODUTO</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <mat-table [dataSource]="products" class="products-table">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
+        <mat-cell *matCellDef="let product" class="col-id cell-id">{{ product.id }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef class="col-description">DESCRIÇÃO</mat-header-cell>
+        <mat-cell *matCellDef="let product" class="col-description cell-description">{{ product.description }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="salePrice">
+        <mat-header-cell *matHeaderCellDef class="col-price">VALOR</mat-header-cell>
+        <mat-cell *matCellDef="let product" class="col-price cell-num">{{ formatPrice(product.salePrice) }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <mat-header-cell *matHeaderCellDef class="col-stock">ESTOQUE</mat-header-cell>
+        <mat-cell *matCellDef="let product" class="col-stock cell-num">{{ product.stock }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="col-actions">AÇÕES</mat-header-cell>
+        <mat-cell *matCellDef="let product" class="col-actions">
+          <button type="button" mat-icon-button disableRipple class="icon-btn icon-edit" title="Editar" (click)="editProduct(product)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Excluir" (click)="deleteProduct(product)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</main>
