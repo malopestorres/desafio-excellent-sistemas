@@ -22,6 +22,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+RUN mkdir -p /app/uploads
+
 # Copia package files e instala apenas dependências de produção
 COPY package*.json pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile

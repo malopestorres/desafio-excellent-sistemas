@@ -43,6 +43,9 @@ playwright-report/
 # Docker
 docker-compose.override.yml
 
+# Uploads
+backend/uploads/
+
 # Misc
 *.tsbuildinfo
 .eslintcache

@@ -5,8 +5,8 @@ import {
   Min,
   IsArray,
   IsOptional,
-  IsUrl,
   Length,
+  Matches,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -24,7 +24,11 @@ export class CreateProductDto {
   stock: number;
 
   @IsOptional()
-  @IsArray({ message: 'Imagens deve ser um array de URLs' })
-  @IsUrl({}, { each: true, message: 'Cada imagem deve ser uma URL válida' })
+  @IsArray({ message: 'Imagens deve ser um array' })
+  @IsString({ each: true, message: 'Cada imagem deve ser uma string' })
+  @Matches(/^(\/uploads\/|https?:\/\/)/, {
+    each: true,
+    message: 'Cada imagem deve ser um caminho de upload ou URL válida',
+  })
   images?: string[];
 }
