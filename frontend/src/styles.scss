@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+/* Fonte base */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+@import 'material-symbols/outlined.css';
+
+:root {
+  /* Cores do design */
+  --color-primary: #009689;
+  --color-primary-dark: #008478;
+  --color-header-bg: #f0f5f7;
+  --color-page-bg: #ffffff;
+  --color-text-title: #000000;
+  --color-text-menu: #000000;
+  --color-text-muted: #cdd2d3;
+  --color-table-header-bg: #f1f3f5;
+  --color-table-header-text: #252c35;
+  --color-table-cell-strong: #252c35;
+  --color-table-cell: #596370;
+  --color-border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-text-title);
+  background-color: var(--color-page-bg);
+}
