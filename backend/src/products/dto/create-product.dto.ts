@@ -5,11 +5,17 @@ import {
   Min,
   IsArray,
   IsOptional,
+  IsInt,
+  IsPositive,
   Length,
   Matches,
 } from 'class-validator';
 
 export class CreateProductDto {
+  @IsInt({ message: 'ID deve ser um número inteiro' })
+  @IsPositive({ message: 'ID deve ser um número positivo' })
+  id: number;
+
   @IsString({ message: 'Descrição deve ser uma string' })
   @IsNotEmpty({ message: 'Descrição é obrigatória' })
   @Length(3, 500, { message: 'Descrição deve ter entre 3 e 500 caracteres' })
