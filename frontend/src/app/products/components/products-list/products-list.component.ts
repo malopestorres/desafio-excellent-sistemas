@@ -41,7 +41,7 @@ export class ProductsListComponent {
   }
 
   editProduct(product: Product): void {
-    void product;
+    this.router.navigate(['/produtos/editar', product.id]);
   }
 
   navigateToForm(): void {

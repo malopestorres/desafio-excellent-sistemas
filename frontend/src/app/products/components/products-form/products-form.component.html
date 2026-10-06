@@ -1,0 +1,103 @@
+<app-header />
+
+<main class="container">
+  <div class="page-header">
+    <span class="title-bar"></span>
+    <h1 class="page-title">{{ isEdit ? 'Editar Produto' : 'Cadastrar Produto' }}</h1>
+
+    <span class="back-link" (click)="cancel()">← Voltar</span>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row row-half">
+      <div class="field">
+        <label class="field-label" for="id">ID</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <input matInput id="id" type="text" formControlName="id" [readonly]="isEdit" (input)="duplicateIdError = false" />
+        </mat-form-field>
+        <span class="field-error" *ngIf="duplicateIdError">Já existe um produto com este ID.</span>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="description">Descrição</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <input matInput id="description" type="text" formControlName="description" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row row-half">
+      <div class="field">
+        <label class="field-label" for="salePrice">Valor de venda</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <input matInput id="salePrice" type="number" step="0.01" formControlName="salePrice" />
+        </mat-form-field>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="stock">Estoque</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <input matInput id="stock" type="number" formControlName="stock" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      class="upload-area"
+      (click)="fileInput.click()"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event)"
+    >
+      <input #fileInput type="file" accept="image/*" multiple hidden (change)="onFileSelected($event)" />
+      <input #replaceInput type="file" accept="image/*" hidden (change)="onReplaceSelected($event)" />
+
+      <svg
+        class="upload-icon"
+        width="60"
+        height="61"
+        viewBox="0 0 60 61"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M35.4948 9.29297H56.3565C57.3658 9.29297 58.2718 9.70996 58.9266 10.3752C59.5864 11.0404 60 11.9637 60 12.9665V57.3265C60 58.3442 59.5864 59.2576 58.9266 59.9178C58.2669 60.583 57.3511 61 56.3565 61H12.0532C11.0438 61 10.1379 60.583 9.48301 59.9178C8.82324 59.2526 8.40965 58.3293 8.40965 57.3265V35.4741C9.6258 35.9705 10.8961 36.3577 12.2107 36.6109V46.6783H12.2255C18.5721 40.5575 22.777 37.5343 29.0891 32.3665C29.1137 32.3914 29.1384 32.4162 29.163 32.441C29.1777 32.4559 29.1777 32.4708 29.1925 32.4708L42.3978 48.2222L44.4165 35.6925C44.5544 34.8883 45.3028 34.3373 46.1004 34.4763C46.4057 34.521 46.6814 34.6749 46.8981 34.8784L56.1644 44.6926V13.8551C56.1644 13.6565 56.0857 13.4827 55.9478 13.3636C55.8247 13.2395 55.6425 13.1452 55.4604 13.1452H36.4599C36.258 11.8148 35.933 10.5291 35.4948 9.29297ZM16.1448 0C25.0615 0 32.2895 7.28744 32.2895 16.2776C32.2895 25.2677 25.0615 32.5552 16.1448 32.5552C7.22797 32.5552 0 25.2677 0 16.2776C0 7.28744 7.22797 0 16.1448 0ZM7.5677 16.5655H13.0034V24.3891H19.1334V16.5655H24.7267L16.1497 8.16113L7.5677 16.5655ZM46.4156 17.7023C47.868 17.7023 49.2024 18.303 50.1477 19.2611C51.1128 20.234 51.6937 21.5595 51.6937 23.0289C51.6937 24.4933 51.098 25.8386 50.1477 26.7917C49.1827 27.7647 47.868 28.3505 46.4156 28.3505C44.9631 28.3505 43.6288 27.7498 42.6785 26.7917C41.7134 25.8188 41.1324 24.4933 41.1324 23.0289C41.1324 21.5645 41.7282 20.2241 42.6785 19.2611C43.6484 18.2881 44.9631 17.7023 46.4156 17.7023Z"
+          fill="#003E4E"
+        />
+      </svg>
+      <span class="upload-text">arraste as imagens aqui ou clique para enviar</span>
+    </div>
+
+    <div class="thumb-list" *ngIf="imagens.length">
+      <div class="thumb" *ngFor="let image of imagens; let i = index">
+        <img [src]="imageUrl(image)" alt="" />
+        <button
+          type="button"
+          mat-icon-button
+          disableRipple
+          class="thumb-btn thumb-edit"
+          title="Substituir"
+          (click)="onReplaceClick(i, replaceInput)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          type="button"
+          mat-icon-button
+          disableRipple
+          class="thumb-btn thumb-delete"
+          title="Remover"
+          (click)="removeImage(i)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="row row-actions">
+      <button type="button" mat-stroked-button class="btn-cancel" (click)="cancel()">CANCELAR</button>
+      <button type="submit" mat-flat-button class="btn-save">SALVAR</button>
+    </div>
+  </form>
+</main>
