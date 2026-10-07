@@ -2,12 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface ProductImage {
+  id: number;
+  url: string;
+}
+
 export interface Product {
   id: number;
   description: string;
   salePrice: number;
   stock: number;
-  images: string[];
+  images: ProductImage[];
 }
 
 export interface ProductPayload {
@@ -45,5 +50,9 @@ export class ProductsService {
       `${this.baseUrl}/images/upload`,
       formData,
     );
+  }
+
+  remove(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

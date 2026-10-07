@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,9 +32,9 @@ export class ProductsFormComponent {
 
   isEdit = false;
   productId: number | null = null;
-  images: string[] = [];
   replaceIndex: number | null = null;
-  duplicateIdError = false;
+  duplicateIdError = signal(false);
+  images = signal<string[]>([]);
 
   form = this.fb.group({
     id: ['', Validators.required],
@@ -58,7 +58,7 @@ export class ProductsFormComponent {
             salePrice: Number(product.salePrice),
             stock: product.stock,
           });
-          this.images = product.images ?? [];
+          this.images.set((product.images ?? []).map((image) => image.url));
         },
         error: () => this.router.navigate(['/produtos']),
       });
@@ -103,7 +103,7 @@ export class ProductsFormComponent {
   }
 
   removeImage(index: number): void {
-    this.images = this.images.filter((_, itemIndex) => itemIndex !== index);
+    this.images.set(this.images().filter((_, itemIndex) => itemIndex !== index));
   }
 
   private uploadImages(files: ArrayLike<File>, replaceIndex?: number): void {
@@ -118,15 +118,15 @@ export class ProductsFormComponent {
     this.productsService.uploadImages(formData).subscribe({
       next: (result) => {
         if (replaceIndex !== undefined) {
-          const next = [...this.images];
+          const next = [...this.images()];
           if (replaceIndex < next.length) {
             next[replaceIndex] = result.urls[0];
           } else {
             next.push(result.urls[0]);
           }
-          this.images = next;
+          this.images.set(next);
         } else {
-          this.images = [...this.images, ...result.urls];
+          this.images.set([...this.images(), ...result.urls]);
         }
       },
     });
@@ -139,7 +139,7 @@ export class ProductsFormComponent {
     }
 
     const { id, description, salePrice, stock } = this.form.getRawValue();
-    const images = this.images;
+    const images = this.images();
     const base = {
       description: description ?? '',
       salePrice: Number(salePrice),
@@ -155,7 +155,7 @@ export class ProductsFormComponent {
     request.subscribe({
       next: () => this.router.navigate(['/produtos']),
       error: () => {
-        this.duplicateIdError = true;
+        this.duplicateIdError.set(true);
       },
     });
   }

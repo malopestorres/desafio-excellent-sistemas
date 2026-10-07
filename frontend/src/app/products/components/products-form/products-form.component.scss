@@ -176,17 +176,18 @@
 }
 
 .thumb-btn {
-  --mdc-icon-button-state-layer-size: 26px;
-  --mat-icon-button-state-layer-size: 26px;
+  --mdc-icon-button-state-layer-size: 32px;
+  --mat-icon-button-state-layer-size: 32px;
   --mat-icon-button-hover-state-layer-color: transparent;
   --mat-icon-button-focus-state-layer-color: transparent;
   --mat-icon-button-pressed-state-layer-color: transparent;
 
   position: absolute;
   top: 4px;
-  width: 26px;
-  height: 26px;
-  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: #596370;
   background-color: rgba(255, 255, 255, 0.85);
 
   .mat-mdc-button-touch-target {
@@ -194,20 +195,28 @@
   }
 
   mat-icon {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #f1f3f5;
+    color: var(--color-primary);
   }
 }
 
 .thumb-edit {
-  right: 34px;
-  color: #009689;
+  right: 40px;
 }
 
 .thumb-delete {
   right: 4px;
-  color: #dc2626;
+
+  &:hover {
+    background-color: #fdecec;
+    color: #d64545;
+  }
 }
 
 .row-actions {

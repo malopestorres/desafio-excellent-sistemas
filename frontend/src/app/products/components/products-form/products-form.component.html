@@ -13,9 +13,9 @@
       <div class="field">
         <label class="field-label" for="id">ID</label>
         <mat-form-field appearance="outline" class="field-material">
-          <input matInput id="id" type="text" formControlName="id" [readonly]="isEdit" (input)="duplicateIdError = false" />
+          <input matInput id="id" type="text" formControlName="id" [readonly]="isEdit" (input)="duplicateIdError.set(false)" />
         </mat-form-field>
-        <span class="field-error" *ngIf="duplicateIdError">Já existe um produto com este ID.</span>
+        <span class="field-error" *ngIf="duplicateIdError()">Já existe um produto com este ID.</span>
       </div>
 
       <div class="field">
@@ -69,8 +69,8 @@
       <span class="upload-text">arraste as imagens aqui ou clique para enviar</span>
     </div>
 
-    <div class="thumb-list" *ngIf="imagens.length">
-      <div class="thumb" *ngFor="let image of imagens; let i = index">
+    <div class="thumb-list" *ngIf="images().length">
+      <div class="thumb" *ngFor="let image of images(); let i = index">
         <img [src]="imageUrl(image)" alt="" />
         <button
           type="button"
