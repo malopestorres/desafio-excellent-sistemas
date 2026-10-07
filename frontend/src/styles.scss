@@ -52,3 +52,43 @@ body {
   --mat-option-focus-state-layer-color: var(--color-table-header-bg);
   --mat-option-selected-state-layer-color: #e6f5f4;
 }
+
+/* Menu hambúrguer mobile: painel full-width no topo, abaixo do header */
+@media (max-width: 1023.98px) {
+  .app-menu.mat-mdc-menu-panel {
+    position: fixed;
+    top: 86px;
+    left: 0;
+    right: 0;
+    width: auto;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    background-color: #ffffff;
+    --mat-menu-container-color: #ffffff;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
+  }
+
+  .app-menu .mat-mdc-menu-item {
+    min-height: 56px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-table-cell-strong);
+    border-bottom: 1px solid var(--color-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.cdk-program-focused,
+    &:hover {
+      background-color: var(--color-table-header-bg);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-menu.mat-mdc-menu-panel {
+    top: 64px;
+  }
+}
