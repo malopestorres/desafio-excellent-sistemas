@@ -16,36 +16,64 @@
   </div>
 
   <div class="table-wrapper">
-    <mat-table [dataSource]="products()" class="products-table">
+    <mat-table [dataSource]="isLoading() ? skeletonRows : products()" class="products-table">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-id cell-id" data-label="ID">{{ formatId(product.id) }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-id cell-id" data-label="ID">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ formatId(product.id) }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef class="col-description">DESCRIÇÃO</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-description cell-description" data-label="Descrição">{{ product.description }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-description cell-description" data-label="Descrição">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ product.description }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="salePrice">
         <mat-header-cell *matHeaderCellDef class="col-price">VALOR</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-price cell-num" data-label="Valor">{{ formatPrice(product.salePrice) }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-price cell-num" data-label="Valor">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ formatPrice(product.salePrice) }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="stock">
         <mat-header-cell *matHeaderCellDef class="col-stock">ESTOQUE</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-stock cell-num" data-label="Estoque">{{ product.stock }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-stock cell-num" data-label="Estoque">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ product.stock }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="col-actions">AÇÕES</mat-header-cell>
         <mat-cell *matCellDef="let product" class="col-actions" data-label="">
-          <button type="button" mat-icon-button disableRipple class="icon-btn icon-edit" title="Editar" (click)="editProduct(product)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Excluir" (click)="deleteProduct(product)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          @if (isLoading()) {
+            <span class="skeleton-line skeleton-btn"></span>
+          } @else {
+            <button type="button" mat-icon-button disableRipple class="icon-btn icon-edit" title="Editar" (click)="editProduct(product)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Excluir" (click)="deleteProduct(product)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
         </mat-cell>
       </ng-container>
 

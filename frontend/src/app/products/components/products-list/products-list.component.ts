@@ -34,14 +34,25 @@ export class ProductsListComponent implements OnInit {
 
   products = signal<Product[]>([]);
   errorMessage = signal<string | null>(null);
+  isLoading = signal(true);
+
+  readonly skeletonRows: Product[] = Array.from(
+    { length: 5 },
+    () => ({}) as Product,
+  );
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
   private loadProducts(): void {
-    this.productsService.findAll().subscribe((products) => {
-      this.products.set(products);
+    this.isLoading.set(true);
+    this.productsService.findAll().subscribe({
+      next: (products) => {
+        this.products.set(products);
+        this.isLoading.set(false);
+      },
+      error: () => this.isLoading.set(false),
     });
   }
 

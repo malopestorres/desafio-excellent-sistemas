@@ -11,38 +11,72 @@
   </div>
 
   <div class="table-wrapper">
-    <mat-table [dataSource]="orders()" class="orders-table">
+    <mat-table [dataSource]="isLoading() ? skeletonRows : orders()" class="orders-table">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
-        <mat-cell *matCellDef="let order" class="col-id cell-id" data-label="ID">{{ formatId(order.id) }}</mat-cell>
+        <mat-cell *matCellDef="let order" class="col-id cell-id" data-label="ID">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ formatId(order.id) }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="client">
         <mat-header-cell *matHeaderCellDef class="col-client">CLIENTE</mat-header-cell>
-        <mat-cell *matCellDef="let order" class="col-client cell-text" data-label="Cliente">{{ order.client.companyName }}</mat-cell>
+        <mat-cell *matCellDef="let order" class="col-client cell-text" data-label="Cliente">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ order.client.companyName }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="items">
         <mat-header-cell *matHeaderCellDef class="col-items">ITENS</mat-header-cell>
-        <mat-cell *matCellDef="let order" class="col-items cell-muted" data-label="Itens">{{ order.items.length }}</mat-cell>
+        <mat-cell *matCellDef="let order" class="col-items cell-muted" data-label="Itens">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ order.items.length }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="totalAmount">
         <mat-header-cell *matHeaderCellDef class="col-total">VALOR TOTAL</mat-header-cell>
-        <mat-cell *matCellDef="let order" class="col-total cell-big" data-label="Valor total">{{ formatPrice(order.totalAmount) }}</mat-cell>
+        <mat-cell *matCellDef="let order" class="col-total cell-big" data-label="Valor total">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ formatPrice(order.totalAmount) }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="date">
         <mat-header-cell *matHeaderCellDef class="col-date">DATA</mat-header-cell>
-        <mat-cell *matCellDef="let order" class="col-date cell-muted" data-label="Data">{{ formatDate(order.createdAt) }}</mat-cell>
+        <mat-cell *matCellDef="let order" class="col-date cell-muted" data-label="Data">
+          @if (isLoading()) {
+            <span class="skeleton-line"></span>
+          } @else {
+            {{ formatDate(order.createdAt) }}
+          }
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="col-actions">AÇÕES</mat-header-cell>
         <mat-cell *matCellDef="let order" class="col-actions" data-label="">
-          <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Excluir" (click)="deleteOrder(order)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          @if (isLoading()) {
+            <span class="skeleton-line skeleton-btn"></span>
+          } @else {
+            <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Excluir" (click)="deleteOrder(order)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
         </mat-cell>
       </ng-container>
 

@@ -40,14 +40,25 @@ export class OrdersListComponent implements OnInit {
   ];
 
   orders = signal<OrderResponse[]>([]);
+  isLoading = signal(true);
+
+  readonly skeletonRows: OrderResponse[] = Array.from(
+    { length: 5 },
+    () => ({}) as OrderResponse,
+  );
 
   ngOnInit(): void {
     this.loadOrders();
   }
 
   private loadOrders(): void {
-    this.ordersService.findAll().subscribe((orders) => {
-      this.orders.set(orders);
+    this.isLoading.set(true);
+    this.ordersService.findAll().subscribe({
+      next: (orders) => {
+        this.orders.set(orders);
+        this.isLoading.set(false);
+      },
+      error: () => this.isLoading.set(false),
     });
   }
 

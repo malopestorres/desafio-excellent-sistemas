@@ -24,14 +24,25 @@ export class ClientsListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'companyName', 'cnpj', 'email'];
 
   clients = signal<ClientResponse[]>([]);
+  isLoading = signal(true);
+
+  readonly skeletonRows: ClientResponse[] = Array.from(
+    { length: 5 },
+    () => ({}) as ClientResponse,
+  );
 
   ngOnInit(): void {
     this.loadClients();
   }
 
   private loadClients(): void {
-    this.clientsService.findAll().subscribe((clients) => {
-      this.clients.set(clients);
+    this.isLoading.set(true);
+    this.clientsService.findAll().subscribe({
+      next: (clients) => {
+        this.clients.set(clients);
+        this.isLoading.set(false);
+      },
+      error: () => this.isLoading.set(false),
     });
   }
 
