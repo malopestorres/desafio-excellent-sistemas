@@ -6,6 +6,7 @@ import { AppService } from './app.service.js';
 import { ClientsModule } from './clients/clients.module.js';
 import { ProductsModule } from './products/products.module.js';
 import { OrdersModule } from './orders/orders.module.js';
+import { SeedModule } from './seed/seed.module.js';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { OrdersModule } from './orders/orders.module.js';
     ClientsModule,
     ProductsModule,
     OrdersModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
