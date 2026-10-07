@@ -1,17 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
-
-export interface Product {
-  id: string;
-  description: string;
-  salePrice: number;
-  stock: number;
-}
+import { Product, ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-products-list',
@@ -25,19 +19,30 @@ export interface Product {
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss',
 })
-export class ProductsListComponent {
+export class ProductsListComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly productsService = inject(ProductsService);
 
   displayedColumns: string[] = ['id', 'description', 'salePrice', 'stock', 'actions'];
 
-  products: Product[] = [
-    { id: '01', description: 'Notebook', salePrice: 5000, stock: 10 },
-    { id: '02', description: 'Mouse', salePrice: 150, stock: 30 },
-    { id: '03', description: 'Teclado', salePrice: 300, stock: 15 },
-  ];
+  products = signal<Product[]>([]);
 
-  formatPrice(value: number): string {
-    return 'R$ ' + value.toLocaleString('pt-BR');
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  private loadProducts(): void {
+    this.productsService.findAll().subscribe((products) => {
+      this.products.set(products);
+    });
+  }
+
+  formatId(id: number): string {
+    return String(id).padStart(2, '0');
+  }
+
+  formatPrice(value: string | number): string {
+    return 'R$ ' + Number(value).toLocaleString('pt-BR');
   }
 
   editProduct(product: Product): void {
@@ -49,6 +54,12 @@ export class ProductsListComponent {
   }
 
   deleteProduct(product: Product): void {
-    this.products = this.products.filter((item) => item.id !== product.id);
+    this.productsService.remove(product.id).subscribe({
+      next: () => {
+        this.products.update((list) =>
+          list.filter((item) => item.id !== product.id),
+        );
+      },
+    });
   }
 }

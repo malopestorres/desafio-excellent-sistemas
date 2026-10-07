@@ -11,10 +11,10 @@
   </div>
 
   <div class="table-wrapper">
-    <mat-table [dataSource]="products" class="products-table">
+    <mat-table [dataSource]="products()" class="products-table">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-id cell-id">{{ product.id }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-id cell-id">{{ formatId(product.id) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="description">
