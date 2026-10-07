@@ -13,7 +13,7 @@
       <div class="field">
         <label class="field-label" for="id">ID</label>
         <mat-form-field appearance="outline" class="field-material">
-          <input matInput id="id" type="text" formControlName="id" [readonly]="isEdit" (input)="duplicateIdError.set(false)" />
+          <input matInput id="id" type="number" min="1" formControlName="id" [readonly]="isEdit" (input)="duplicateIdError.set(false)" />
         </mat-form-field>
         <span class="field-error" *ngIf="duplicateIdError()">Já existe um produto com este ID.</span>
       </div>

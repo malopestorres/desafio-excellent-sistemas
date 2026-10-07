@@ -37,7 +37,10 @@ export class ProductsFormComponent {
   images = signal<string[]>([]);
 
   form = this.fb.group({
-    id: ['', Validators.required],
+    id: [
+      null as number | null,
+      [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
+    ],
     description: ['', [Validators.required, Validators.minLength(3)]],
     salePrice: [null as number | null, [Validators.required, Validators.min(0)]],
     stock: [null as number | null, [Validators.required, Validators.min(0)]],
@@ -53,7 +56,7 @@ export class ProductsFormComponent {
       this.productsService.findOne(this.productId).subscribe({
         next: (product) => {
           this.form.patchValue({
-            id: String(product.id).padStart(2, '0'),
+            id: product.id,
             description: product.description,
             salePrice: Number(product.salePrice),
             stock: product.stock,

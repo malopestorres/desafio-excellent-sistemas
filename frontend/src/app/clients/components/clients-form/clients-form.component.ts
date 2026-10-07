@@ -8,6 +8,31 @@ import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { ClientsService } from '../../services/clients.service';
 
+export const CNPJ_MASK_PATTERN = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+
+export function maskCnpj(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 14);
+  if (digits.length <= 2) {
+    return digits;
+  }
+  if (digits.length <= 5) {
+    return `${digits.slice(0, 2)}.${digits.slice(2)}`;
+  }
+  if (digits.length <= 8) {
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5)}`;
+  }
+  if (digits.length <= 12) {
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(
+      5,
+      8,
+    )}/${digits.slice(8)}`;
+  }
+  return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(
+    5,
+    8,
+  )}/${digits.slice(8, 12)}-${digits.slice(12)}`;
+}
+
 @Component({
   selector: 'app-clients-form',
   imports: [
@@ -28,14 +53,19 @@ export class ClientsFormComponent {
   private readonly router = inject(Router);
 
   form = this.fb.nonNullable.group({
-    cnpj: ['', [Validators.required, Validators.minLength(14)]],
+    cnpj: ['', [Validators.required, Validators.pattern(CNPJ_MASK_PATTERN)]],
     companyName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
   });
 
+  onCnpjInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.form.controls.cnpj.setValue(maskCnpj(input.value));
+  }
+
   searchCnpj(): void {
-    const cnpj = this.form.controls.cnpj.value;
-    if (cnpj.length >= 14) {
+    const cnpj = this.form.controls.cnpj.value.replace(/\D/g, '');
+    if (cnpj.length === 14) {
       this.clientsService.findByCnpj(cnpj).subscribe({
         next: (client) => {
           if (client.companyName) {
@@ -56,9 +86,11 @@ export class ClientsFormComponent {
     }
 
     const { cnpj, companyName, email } = this.form.getRawValue();
-    this.clientsService.create({ cnpj, companyName, email }).subscribe({
-      next: () => this.router.navigate(['/clientes']),
-    });
+    this.clientsService
+      .create({ cnpj: cnpj.replace(/\D/g, ''), companyName, email })
+      .subscribe({
+        next: () => this.router.navigate(['/clientes']),
+      });
   }
 
   cancel(): void {

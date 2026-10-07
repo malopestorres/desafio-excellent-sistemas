@@ -20,6 +20,8 @@
               type="text"
               formControlName="cnpj"
               placeholder="00.000.000/0000-00"
+              maxlength="18"
+              (input)="onCnpjInput($event)"
             />
           </mat-form-field>
           <button type="button" mat-flat-button class="btn-buscar" (click)="searchCnpj()">
