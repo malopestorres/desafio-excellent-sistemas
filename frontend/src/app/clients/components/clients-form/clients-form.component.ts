@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { ClientsService } from '../../services/clients.service';
 
@@ -39,6 +41,7 @@ export function maskCnpj(value: string): string {
     CommonModule,
     HeaderComponent,
     MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
@@ -51,6 +54,7 @@ export class ClientsFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly clientsService = inject(ClientsService);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   form = this.fb.nonNullable.group({
     cnpj: ['', [Validators.required, Validators.pattern(CNPJ_MASK_PATTERN)]],
@@ -75,8 +79,27 @@ export class ClientsFormComponent {
             this.form.controls.email.setValue(client.email);
           }
         },
+        error: () => this.showCnpjNotFoundDialog(),
       });
     }
+  }
+
+  private showCnpjNotFoundDialog(): void {
+    const data: ConfirmDialogData = {
+      title: 'CNPJ não encontrado',
+      message:
+        'Não encontramos dados para o CNPJ informado. Verifique o número informado e tente novamente.',
+      confirmLabel: 'OK',
+      cancelLabel: 'Cancelar',
+      showCancel: false,
+    };
+
+    this.dialog
+      .open(ConfirmDialogComponent, { data, width: '420px', maxWidth: '95vw' })
+      .afterClosed()
+      .subscribe(() => {
+        this.form.reset();
+      });
   }
 
   save(): void {

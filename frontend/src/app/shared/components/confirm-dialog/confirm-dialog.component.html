@@ -8,14 +8,16 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="dialog-actions">
-  <button
-    type="button"
-    mat-stroked-button
-    class="btn-cancel"
-    (click)="cancel()"
-  >
-    {{ data.cancelLabel }}
-  </button>
+  @if (data.showCancel !== false) {
+    <button
+      type="button"
+      mat-stroked-button
+      class="btn-cancel"
+      (click)="cancel()"
+    >
+      {{ data.cancelLabel }}
+    </button>
+  }
   <button
     type="button"
     mat-flat-button
