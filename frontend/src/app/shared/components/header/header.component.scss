@@ -11,6 +11,12 @@
     margin: 0 auto;
   }
 
+  .logo-link {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+  }
+
   .logo {
     width: auto;
     height: 44px;
