@@ -46,7 +46,7 @@ describe('ClientsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('exibe o campo ID automático (número, read-only) no cadastro', () => {
+  it('exibe o campo ID automático (número, somente leitura) no cadastro', () => {
     const idInput = fixture.nativeElement.querySelector('#id') as HTMLInputElement;
 
     expect(idInput).toBeTruthy();
@@ -72,11 +72,11 @@ describe('ClientsFormComponent', () => {
     expect(component.form.controls.cnpj.touched).toBe(true);
   });
 
-  it('formata CNPJ bruto com mask', () => {
+  it('formata CNPJ bruto com máscara', () => {
     expect(maskCnpj('12345678000190')).toBe('12.345.678/0001-90');
   });
 
-  it('aplica a mask enquanto usuario digita', () => {
+  it('aplica a máscara enquanto usuário digita', () => {
     component.onCnpjInput({
       target: { value: '1234567800019' },
     } as unknown as Event);

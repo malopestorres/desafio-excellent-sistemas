@@ -22,12 +22,12 @@ describe('ProductsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('mostra o campo  ID como input number', () => {
+  it('mostra o campo  ID como número', () => {
     const input = fixture.nativeElement.querySelector('#id') as HTMLInputElement;
     expect(input?.type).toBe('number');
   });
 
-  it('rejeita string no campo  ID', () => {
+  it('rejeita texto no campo  ID', () => {
     component.form.controls.id.setValue('nao-e-um-numero' as unknown as number);
 
     expect(component.form.controls.id.invalid).toBe(true);
