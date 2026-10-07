@@ -1,0 +1,204 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--color-page-bg);
+}
+
+.container {
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0 2.5rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .title-bar {
+    width: 6px;
+    height: 67px;
+    background-color: var(--color-primary);
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-title);
+  }
+
+  .actions {
+    margin-left: auto;
+  }
+}
+
+.btn-new {
+  width: 230px;
+  height: 56px;
+  border-radius: 10px;
+  background-color: var(--color-primary) !important;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 800;
+  --mat-filled-button-hover-state-layer-color: transparent;
+
+  &:hover {
+    background-color: var(--color-primary-dark) !important;
+  }
+}
+
+.table-wrapper {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  overflow-x: auto;
+}
+
+:host ::ng-deep .orders-table {
+  width: 100%;
+  min-width: 1200px;
+  table-layout: fixed;
+  background-color: #ffffff;
+
+  .mat-mdc-header-row {
+    height: 48px;
+    min-height: 48px;
+    background-color: var(--color-table-header-bg);
+    border-bottom: 1px solid #dde2e7;
+  }
+
+  .mat-mdc-header-cell {
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-table-header-text);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .mat-mdc-header-cell:first-child {
+    padding-left: 24px;
+  }
+
+  .mat-mdc-header-cell:last-child {
+    padding-right: 24px;
+  }
+
+  .mat-mdc-row {
+    height: 64px;
+    min-height: 64px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9edf0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .mat-mdc-cell {
+    padding: 0 12px;
+    font-size: 14px;
+    color: var(--color-table-cell);
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mat-mdc-cell:first-child {
+    padding-left: 24px;
+  }
+
+  .mat-mdc-cell:last-child {
+    padding-right: 24px;
+  }
+
+  .mat-column-id {
+    flex: 0 0 96px;
+    width: 96px;
+    max-width: 96px;
+  }
+
+  .mat-column-client {
+    flex: 0 0 508px;
+    width: 508px;
+    max-width: 508px;
+  }
+
+  .mat-column-items {
+    flex: 0 0 176px;
+    width: 176px;
+    max-width: 176px;
+  }
+
+  .mat-column-totalAmount {
+    flex: 0 0 136px;
+    width: 136px;
+    max-width: 136px;
+  }
+
+  .mat-column-date {
+    flex: 0 0 152px;
+    width: 152px;
+    max-width: 152px;
+  }
+
+  .mat-column-actions {
+    flex: 0 0 132px;
+    width: 132px;
+    max-width: 132px;
+  }
+
+  .cell-id,
+  .cell-big {
+    font-weight: 600;
+    color: var(--color-table-cell-strong);
+  }
+
+  .cell-text {
+    font-weight: 500;
+    color: var(--color-table-cell-strong);
+  }
+
+  .cell-muted {
+    font-weight: 400;
+    color: var(--color-table-cell);
+  }
+}
+
+.icon-btn {
+  --mdc-icon-button-state-layer-size: 32px;
+  --mat-icon-button-state-layer-size: 32px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  color: #596370;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #f1f3f5;
+    color: var(--color-primary);
+  }
+
+  &.icon-delete:hover {
+    background-color: #fdecec;
+    color: #d64545;
+  }
+}
+
+:host ::ng-deep .icon-btn {
+  --mat-icon-button-hover-state-layer-color: transparent;
+  --mat-icon-button-focus-state-layer-color: transparent;
+  --mat-icon-button-pressed-state-layer-color: transparent;
+
+  .mat-mdc-button-touch-target {
+    display: none;
+  }
+}

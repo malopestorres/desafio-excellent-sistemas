@@ -1,0 +1,53 @@
+<app-header />
+
+<main class="container">
+  <div class="page-header">
+    <span class="title-bar"></span>
+    <h1 class="page-title">Pedidos</h1>
+
+    <div class="actions">
+      <button mat-flat-button class="btn-new" (click)="navigateToForm()">+ NOVO PEDIDO</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <mat-table [dataSource]="orders()" class="orders-table">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
+        <mat-cell *matCellDef="let order" class="col-id cell-id">{{ formatId(order.id) }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="client">
+        <mat-header-cell *matHeaderCellDef class="col-client">CLIENTE</mat-header-cell>
+        <mat-cell *matCellDef="let order" class="col-client cell-text">{{ order.client.companyName }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="items">
+        <mat-header-cell *matHeaderCellDef class="col-items">ITENS</mat-header-cell>
+        <mat-cell *matCellDef="let order" class="col-items cell-muted">{{ order.items.length }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="totalAmount">
+        <mat-header-cell *matHeaderCellDef class="col-total">VALOR TOTAL</mat-header-cell>
+        <mat-cell *matCellDef="let order" class="col-total cell-big">{{ formatPrice(order.totalAmount) }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef class="col-date">DATA</mat-header-cell>
+        <mat-cell *matCellDef="let order" class="col-date cell-muted">{{ formatDate(order.createdAt) }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="col-actions">AÇÕES</mat-header-cell>
+        <mat-cell *matCellDef="let order" class="col-actions">
+          <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Excluir" (click)="deleteOrder(order)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</main>
