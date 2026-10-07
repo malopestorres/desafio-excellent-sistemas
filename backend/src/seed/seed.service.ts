@@ -64,21 +64,15 @@ const CLIENTS: SeedClient[] = [
 const ORDERS: SeedOrder[] = [
   {
     clientIndex: 0,
-    items: [
-      { productIndex: 0, quantity: 1 },
-      { productIndex: 1, quantity: 2 },
-    ],
+    items: [{ productIndex: 0, quantity: 1 }],
   },
   {
     clientIndex: 1,
-    items: [
-      { productIndex: 2, quantity: 1 },
-      { productIndex: 1, quantity: 3 },
-    ],
+    items: [{ productIndex: 0, quantity: 2 }],
   },
   {
     clientIndex: 2,
-    items: [{ productIndex: 0, quantity: 2 }],
+    items: [{ productIndex: 0, quantity: 3 }],
   },
 ];
 
