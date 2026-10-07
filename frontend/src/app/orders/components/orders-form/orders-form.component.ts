@@ -45,7 +45,6 @@ export class OrdersFormComponent {
   products = signal<Product[]>([]);
   serverError = signal('');
 
-  /** Borda vermelha de erro só aparece após tentar salvar. */
   readonly errorMatcher = new SubmittedErrorStateMatcher();
 
   form = this.fb.group({

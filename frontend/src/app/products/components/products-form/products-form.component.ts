@@ -37,7 +37,6 @@ export class ProductsFormComponent {
   duplicateIdError = signal(false);
   images = signal<string[]>([]);
 
-  /** Borda vermelha de erro só aparece após tentar salvar. */
   readonly errorMatcher = new SubmittedErrorStateMatcher();
 
   form = this.fb.group({
