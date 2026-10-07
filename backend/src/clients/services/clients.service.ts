@@ -54,7 +54,16 @@ export class ClientsService {
   }
 
   async create(createClientDto: CreateClientDto): Promise<Client> {
-    const cleanCnpj = createClientDto.cnpj.replace(/[^\d]/g, '');
+    const { id, ...data } = createClientDto;
+    const cleanCnpj = data.cnpj.replace(/[^\d]/g, '');
+
+    const existingById = await this.clientsRepository.findOne({
+      where: { id },
+    });
+
+    if (existingById) {
+      throw new ConflictException(`Já existe um cliente com o ID ${id}`);
+    }
 
     const existing = await this.clientsRepository.findOne({
       where: { cnpj: cleanCnpj },
@@ -66,12 +75,21 @@ export class ClientsService {
       );
     }
 
-    const client = this.clientsRepository.create({
-      ...createClientDto,
-      cnpj: cleanCnpj,
-    });
+    await this.clientsRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Client, ['id', 'companyName', 'cnpj', 'email'])
+      .values({
+        id,
+        companyName: data.companyName,
+        cnpj: cleanCnpj,
+        email: data.email,
+      })
+      .execute();
 
-    return this.clientsRepository.save(client);
+    return this.clientsRepository.findOneOrFail({
+      where: { id },
+    });
   }
 
   async update(id: number, updateClientDto: UpdateClientDto): Promise<Client> {
