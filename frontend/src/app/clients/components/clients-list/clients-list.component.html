@@ -14,22 +14,22 @@
     <mat-table [dataSource]="clients()" class="clients-table">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-id cell-id">{{ formatId(client.id) }}</mat-cell>
+        <mat-cell *matCellDef="let client" class="col-id cell-id" data-label="ID">{{ formatId(client.id) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="companyName">
         <mat-header-cell *matHeaderCellDef class="col-company">RAZÃO SOCIAL</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-company cell-strong">{{ client.companyName }}</mat-cell>
+        <mat-cell *matCellDef="let client" class="col-company cell-strong" data-label="Razão social">{{ client.companyName }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cnpj">
         <mat-header-cell *matHeaderCellDef class="col-cnpj">CNPJ</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-cnpj cell-cnpj">{{ formatCnpj(client.cnpj) }}</mat-cell>
+        <mat-cell *matCellDef="let client" class="col-cnpj cell-cnpj" data-label="CNPJ">{{ formatCnpj(client.cnpj) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef class="col-email">E-MAIL</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-email">{{ client.email }}</mat-cell>
+        <mat-cell *matCellDef="let client" class="col-email" data-label="E-mail">{{ client.email }}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

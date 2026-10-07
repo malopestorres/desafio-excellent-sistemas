@@ -5,5 +5,21 @@
     </a>
     <app-menu />
     <span class="brand-text">PAINEL ADMINISTRATIVO</span>
+
+    <button
+      type="button"
+      mat-icon-button
+      disableRipple
+      class="menu-toggle"
+      aria-label="Abrir menu"
+      [matMenuTriggerFor]="appMenu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #appMenu="matMenu" xPosition="before" class="app-menu">
+      <a mat-menu-item routerLink="/clientes">Clientes</a>
+      <a mat-menu-item routerLink="/produtos">Produtos</a>
+      <a mat-menu-item routerLink="/pedidos">Pedidos</a>
+    </mat-menu>
   </div>
 </header>

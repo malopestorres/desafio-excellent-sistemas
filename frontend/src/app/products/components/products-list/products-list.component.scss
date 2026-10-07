@@ -8,7 +8,7 @@
   width: 1200px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 2rem 0 2.5rem;
+  padding: 2rem 1.5rem 2.5rem;
 }
 
 .page-header {
@@ -157,6 +157,105 @@
   .cell-description {
     font-weight: 500;
     color: var(--color-table-cell-strong);
+  }
+}
+
+/* Responsivo: quebra a tabela em cards no mobile (sem scroll horizontal) */
+@media (max-width: 1023.98px) {
+  .container {
+    padding-top: 1.25rem;
+  }
+
+  .page-header {
+    flex-wrap: wrap;
+  }
+
+  .btn-new {
+    width: 100%;
+  }
+
+  .table-wrapper {
+    overflow: visible;
+    border-top: none;
+  }
+
+  :host ::ng-deep .products-table {
+    min-width: 0;
+
+    .mat-mdc-header-row {
+      display: none;
+    }
+
+    .mat-mdc-row {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 0;
+      margin-bottom: 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+
+      &:last-child {
+        border-bottom: 1px solid #e5e7eb;
+      }
+    }
+
+    .mat-mdc-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      height: auto;
+      min-height: 48px;
+      padding: 10px 16px;
+      overflow: visible;
+      text-overflow: unset;
+      white-space: normal;
+      border-bottom: 1px solid #e9edf0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--color-table-header-text);
+      }
+    }
+
+    .mat-column-id,
+    .mat-column-description,
+    .mat-column-salePrice,
+    .mat-column-stock,
+    .mat-column-actions {
+      flex: none;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .mat-column-actions {
+      justify-content: flex-end;
+      gap: 8px;
+      min-height: 56px;
+
+      &::before {
+        content: '';
+      }
+    }
+
+    .cell-id,
+    .cell-num,
+    .cell-description {
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 

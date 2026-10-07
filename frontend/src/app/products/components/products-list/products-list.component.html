@@ -14,27 +14,27 @@
     <mat-table [dataSource]="products()" class="products-table">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-id cell-id">{{ formatId(product.id) }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-id cell-id" data-label="ID">{{ formatId(product.id) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef class="col-description">DESCRIÇÃO</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-description cell-description">{{ product.description }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-description cell-description" data-label="Descrição">{{ product.description }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="salePrice">
         <mat-header-cell *matHeaderCellDef class="col-price">VALOR</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-price cell-num">{{ formatPrice(product.salePrice) }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-price cell-num" data-label="Valor">{{ formatPrice(product.salePrice) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="stock">
         <mat-header-cell *matHeaderCellDef class="col-stock">ESTOQUE</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-stock cell-num">{{ product.stock }}</mat-cell>
+        <mat-cell *matCellDef="let product" class="col-stock cell-num" data-label="Estoque">{{ product.stock }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="col-actions">AÇÕES</mat-header-cell>
-        <mat-cell *matCellDef="let product" class="col-actions">
+        <mat-cell *matCellDef="let product" class="col-actions" data-label="">
           <button type="button" mat-icon-button disableRipple class="icon-btn icon-edit" title="Editar" (click)="editProduct(product)">
             <mat-icon>edit</mat-icon>
           </button>
