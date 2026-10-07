@@ -1,0 +1,75 @@
+<app-header />
+
+<main class="container">
+  <div class="page-header">
+    <span class="title-bar"></span>
+    <h1 class="page-title">Cadastrar Pedido</h1>
+
+    <span class="back-link" (click)="cancel()">← Voltar</span>
+  </div>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <div class="field">
+        <label class="field-label" for="clientId">Cliente</label>
+        <mat-form-field appearance="outline" class="field-material">
+          <mat-select id="clientId" formControlName="clientId" placeholder="Selecione o cliente">
+            <mat-option *ngFor="let client of clients()" [value]="client.id">{{ client.companyName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="items-head">
+        <span class="items-title">Itens do pedido</span>
+        <button type="button" mat-stroked-button class="btn-add" (click)="addItem()">+ ADICIONAR PRODUTO</button>
+      </div>
+
+      <div class="item-list" formArrayName="items">
+        <div class="item-row" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+          <div class="field field-product">
+            <label class="field-label" [for]="'productId-' + i">Produto</label>
+            <mat-form-field appearance="outline" class="field-material">
+              <mat-select [id]="'productId-' + i" formControlName="productId" placeholder="Selecione o produto">
+                <mat-option *ngFor="let product of products()" [value]="product.id">{{ product.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="field field-quantity">
+            <label class="field-label" [for]="'qty-' + i">Quantidade</label>
+            <mat-form-field appearance="outline" class="field-material">
+              <input matInput [id]="'qty-' + i" type="number" min="1" formControlName="quantity" />
+            </mat-form-field>
+          </div>
+
+          <div class="field field-subtotal">
+            <label class="field-label">Subtotal</label>
+            <mat-form-field appearance="outline" class="field-material">
+              <input matInput [value]="subtotalText(i)" readonly />
+            </mat-form-field>
+          </div>
+
+          <button type="button" mat-icon-button disableRipple class="icon-btn icon-delete" title="Remover" (click)="removeItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-total">
+      <span class="total-label">VALOR TOTAL</span>
+      <span class="total-value">R$ {{ total().toLocaleString('pt-BR') }}</span>
+    </div>
+
+    <div class="row row-error">
+      <span class="field-error" *ngIf="serverError()"> {{ serverError() }} </span>
+    </div>
+
+    <div class="row row-actions">
+      <button type="button" mat-stroked-button class="btn-cancel" (click)="cancel()">CANCELAR</button>
+      <button type="submit" mat-flat-button class="btn-save">SALVAR</button>
+    </div>
+  </form>
+</main>

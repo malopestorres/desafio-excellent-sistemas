@@ -8,14 +8,18 @@ export interface ClientPayload {
   email: string;
 }
 
+export interface ClientResponse extends ClientPayload {
+  id: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ClientsService {
   private readonly baseUrl = 'http://localhost:3000/clients';
 
   constructor(private readonly http: HttpClient) {}
 
-  findAll(): Observable<ClientPayload[]> {
-    return this.http.get<ClientPayload[]>(this.baseUrl);
+  findAll(): Observable<ClientResponse[]> {
+    return this.http.get<ClientResponse[]>(this.baseUrl);
   }
 
   findByCnpj(cnpj: string): Observable<Partial<ClientPayload>> {
