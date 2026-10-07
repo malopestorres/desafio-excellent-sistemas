@@ -49,6 +49,26 @@
   }
 }
 
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid #f0b9b9;
+  border-radius: 8px;
+  background-color: #fdecec;
+  color: #b3261e;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.error-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+}
+
 .table-wrapper {
   margin-top: 1.5rem;
   border-top: 1px solid #e5e7eb;

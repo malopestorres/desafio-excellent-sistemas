@@ -10,6 +10,11 @@
     </div>
   </div>
 
+  <div class="error-banner" role="alert" *ngIf="errorMessage()">
+    <mat-icon class="error-icon" aria-hidden="true">error</mat-icon>
+    <span>{{ errorMessage() }}</span>
+  </div>
+
   <div class="table-wrapper">
     <mat-table [dataSource]="products()" class="products-table">
       <ng-container matColumnDef="id">

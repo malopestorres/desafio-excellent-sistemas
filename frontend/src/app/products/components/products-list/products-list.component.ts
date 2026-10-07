@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogData,
+} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { Product, ProductsService } from '../../services/products.service';
 
@@ -13,6 +18,7 @@ import { Product, ProductsService } from '../../services/products.service';
     CommonModule,
     HeaderComponent,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatTableModule,
   ],
@@ -22,10 +28,12 @@ import { Product, ProductsService } from '../../services/products.service';
 export class ProductsListComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly productsService = inject(ProductsService);
+  private readonly dialog = inject(MatDialog);
 
   displayedColumns: string[] = ['id', 'description', 'salePrice', 'stock', 'actions'];
 
   products = signal<Product[]>([]);
+  errorMessage = signal<string | null>(null);
 
   ngOnInit(): void {
     this.loadProducts();
@@ -54,12 +62,52 @@ export class ProductsListComponent implements OnInit {
   }
 
   deleteProduct(product: Product): void {
-    this.productsService.remove(product.id).subscribe({
-      next: () => {
-        this.products.update((list) =>
-          list.filter((item) => item.id !== product.id),
-        );
-      },
-    });
+    this.errorMessage.set(null);
+
+    const data: ConfirmDialogData = {
+      title: 'Excluir produto',
+      message: `Deseja realmente excluir o produto "${product.description}"?`,
+      confirmLabel: 'Excluir',
+      cancelLabel: 'Cancelar',
+    };
+
+    this.dialog
+      .open(ConfirmDialogComponent, { data, width: '420px', maxWidth: '95vw' })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (!confirmed) {
+          return;
+        }
+        this.productsService.remove(product.id).subscribe({
+          next: () => {
+            this.products.update((list) =>
+              list.filter((item) => item.id !== product.id),
+            );
+          },
+          error: (error: unknown) => {
+            this.errorMessage.set(
+              this.extractErrorMessage(error) ??
+                'Não foi possível excluir o produto.',
+            );
+          },
+        });
+      });
+  }
+
+  private extractErrorMessage(error: unknown): string | null {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'error' in error &&
+      typeof (error as { error?: unknown }).error === 'object' &&
+      (error as { error?: { message?: unknown } }).error !== null
+    ) {
+      const apiMessage = (error as { error: { message?: unknown } }).error
+        .message;
+      if (typeof apiMessage === 'string' && apiMessage.length > 0) {
+        return apiMessage;
+      }
+    }
+    return null;
   }
 }
