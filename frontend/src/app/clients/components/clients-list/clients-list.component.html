@@ -32,18 +32,6 @@
         <mat-cell *matCellDef="let client" class="col-email">{{ client.email }}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef class="col-actions">AÇÕES</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-actions">
-          <button type="button" mat-icon-button disableRipple class="icon-btn" title="Editar" (click)="editClient(client)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button type="button" mat-icon-button disableRipple class="icon-btn icon-btn-danger" title="Excluir" (click)="deleteClient(client)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>

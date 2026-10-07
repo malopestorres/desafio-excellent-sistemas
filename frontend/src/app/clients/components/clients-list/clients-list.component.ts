@@ -19,7 +19,6 @@ export interface Client {
     CommonModule,
     HeaderComponent,
     MatButtonModule,
-    MatIconModule,
     MatTableModule,
   ],
   templateUrl: './clients-list.component.html',
@@ -28,7 +27,7 @@ export interface Client {
 export class ClientsListComponent {
   private readonly router = inject(Router);
 
-  displayedColumns: string[] = ['id', 'companyName', 'cnpj', 'email', 'actions'];
+  displayedColumns: string[] = ['id', 'companyName', 'cnpj', 'email'];
 
   clients: Client[] = [
     {
@@ -63,15 +62,7 @@ export class ClientsListComponent {
     },
   ];
 
-  editClient(client: Client): void {
-    void client;
-  }
-
   navigateToForm(): void {
     this.router.navigate(['/clientes/cadastro']);
-  }
-
-  deleteClient(client: Client): void {
-    this.clients = this.clients.filter((item) => item.id !== client.id);
   }
 }

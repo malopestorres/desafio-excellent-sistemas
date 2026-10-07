@@ -129,15 +129,9 @@
   }
 
   .mat-column-email {
-    flex: 0 0 288px;
-    width: 288px;
-    max-width: 288px;
-  }
-
-  .mat-column-actions {
-    flex: 0 0 132px;
-    width: 132px;
-    max-width: 132px;
+    flex: 0 0 420px;
+    width: 420px;
+    max-width: 420px;
   }
 
   .cell-id,
@@ -154,41 +148,5 @@
   .cell-strong {
     font-weight: 500;
     color: var(--color-table-cell-strong);
-  }
-}
-
-.icon-btn {
-  --mdc-icon-button-state-layer-size: 32px;
-  --mat-icon-button-state-layer-size: 32px;
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  color: #596370;
-
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  &:hover {
-    background-color: #f1f3f5;
-    color: var(--color-primary);
-  }
-
-  &.icon-btn-danger:hover {
-    background-color: #fdecec;
-    color: #d64545;
-  }
-}
-
-:host ::ng-deep .icon-btn {
-  --mat-icon-button-hover-state-layer-color: transparent;
-  --mat-icon-button-focus-state-layer-color: transparent;
-  --mat-icon-button-pressed-state-layer-color: transparent;
-
-  .mat-mdc-button-touch-target {
-    display: none;
   }
 }
