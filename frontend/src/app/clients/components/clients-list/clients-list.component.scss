@@ -53,6 +53,12 @@
   margin-top: 1.5rem;
   border-top: 1px solid #dde2e7;
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 :host ::ng-deep .clients-table {
