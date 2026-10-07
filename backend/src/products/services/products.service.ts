@@ -54,15 +54,32 @@ export class ProductsService {
       );
     }
 
-    const product = this.productsRepository.create(productData);
+    await this.productsRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Product, ['id', 'description', 'salePrice', 'stock'])
+      .values({
+        id: createProductDto.id,
+        description: productData.description,
+        salePrice: productData.salePrice,
+        stock: productData.stock,
+      })
+      .execute();
 
     if (images && images.length > 0) {
-      product.images = images.map((url) =>
-        this.imagesRepository.create({ url }),
+      await this.imagesRepository.save(
+        images.map((url) =>
+          this.imagesRepository.create({
+            url,
+            product: { id: createProductDto.id },
+          }),
+        ),
       );
     }
 
-    return this.productsRepository.save(product);
+    return this.productsRepository.findOneOrFail({
+      where: { id: createProductDto.id },
+    });
   }
 
   async update(
