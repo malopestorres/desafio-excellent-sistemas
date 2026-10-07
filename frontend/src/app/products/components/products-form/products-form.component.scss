@@ -71,6 +71,11 @@
   font-size: 14px;
   font-weight: 600;
   color: #111827;
+
+  &.is-required::after {
+    content: ' *';
+    color: #d64545;
+  }
 }
 
 .field-material {

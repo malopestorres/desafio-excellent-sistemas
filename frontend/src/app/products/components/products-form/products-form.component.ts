@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { SubmittedErrorStateMatcher } from '../../../shared/utils/submitted-error-state-matcher';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -35,6 +36,9 @@ export class ProductsFormComponent {
   replaceIndex: number | null = null;
   duplicateIdError = signal(false);
   images = signal<string[]>([]);
+
+  /** Borda vermelha de erro só aparece após tentar salvar. */
+  readonly errorMatcher = new SubmittedErrorStateMatcher();
 
   form = this.fb.group({
     id: [
@@ -137,6 +141,7 @@ export class ProductsFormComponent {
 
   save(): void {
     if (this.form.invalid) {
+      this.errorMatcher.submitted = true;
       this.form.markAllAsTouched();
       return;
     }

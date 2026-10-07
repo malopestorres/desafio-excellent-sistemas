@@ -71,6 +71,11 @@
   font-size: 14px;
   font-weight: 600;
   color: #111827;
+
+  &.is-required::after {
+    content: ' *';
+    color: #d64545;
+  }
 }
 
 .field-material {
@@ -129,15 +134,8 @@
 }
 
 .field-id {
-  flex: 0 0 240px;
-  max-width: 240px;
-}
-
-:host ::ng-deep .field-id .field-material {
-  .mdc-text-field--disabled .mdc-floating-label,
-  .mdc-text-field--disabled .mdc-text-field__input::placeholder {
-    color: #9ca3af;
-  }
+  flex: 0 0 160px;
+  max-width: 160px;
 }
 
 .row-actions {

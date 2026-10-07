@@ -46,12 +46,30 @@ describe('ClientsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('exibe o campo ID read-only no cadastro', () => {
+  it('exibe o campo ID automático (número, read-only) no cadastro', () => {
     const idInput = fixture.nativeElement.querySelector('#id') as HTMLInputElement;
 
     expect(idInput).toBeTruthy();
     expect(idInput.disabled).toBe(true);
+    expect(idInput.type).toBe('number');
     expect(component.currentId).toBeNull();
+  });
+
+  it('marca os campos obrigatórios com asterisco', () => {
+    const cnpjLabel = fixture.nativeElement.querySelector(
+      'label[for="cnpj"]',
+    ) as HTMLLabelElement;
+
+    expect(cnpjLabel.classList.contains('is-required')).toBe(true);
+  });
+
+  it('ativa a borda de erro somente após tentar salvar', () => {
+    expect(component.errorMatcher.submitted).toBe(false);
+
+    component.save();
+
+    expect(component.errorMatcher.submitted).toBe(true);
+    expect(component.form.controls.cnpj.touched).toBe(true);
   });
 
   it('formata CNPJ bruto com mask', () => {

@@ -11,9 +11,9 @@
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
     <div class="row">
       <div class="field">
-        <label class="field-label" for="clientId">Cliente</label>
+        <label class="field-label is-required" for="clientId">Cliente</label>
         <mat-form-field appearance="outline" class="field-material">
-          <mat-select id="clientId" formControlName="clientId" placeholder="Selecione o cliente">
+          <mat-select id="clientId" formControlName="clientId" placeholder="Selecione o cliente" [errorStateMatcher]="errorMatcher">
             <mat-option *ngFor="let client of clients()" [value]="client.id">{{ client.companyName }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -29,18 +29,18 @@
       <div class="item-list" formArrayName="items">
         <div class="item-row" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
           <div class="field field-product">
-            <label class="field-label" [for]="'productId-' + i">Produto</label>
+            <label class="field-label is-required" [for]="'productId-' + i">Produto</label>
             <mat-form-field appearance="outline" class="field-material">
-              <mat-select [id]="'productId-' + i" formControlName="productId" placeholder="Selecione o produto">
+              <mat-select [id]="'productId-' + i" formControlName="productId" placeholder="Selecione o produto" [errorStateMatcher]="errorMatcher">
                 <mat-option *ngFor="let product of products()" [value]="product.id">{{ product.description }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
 
           <div class="field field-quantity">
-            <label class="field-label" [for]="'qty-' + i">Quantidade</label>
+            <label class="field-label is-required" [for]="'qty-' + i">Quantidade</label>
             <mat-form-field appearance="outline" class="field-material">
-              <input matInput [id]="'qty-' + i" type="number" min="1" formControlName="quantity" />
+              <input matInput [id]="'qty-' + i" type="number" min="1" formControlName="quantity" [errorStateMatcher]="errorMatcher" />
             </mat-form-field>
           </div>
 

@@ -6,8 +6,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
-import { ConfirmDialogComponent, ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogData,
+} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { SubmittedErrorStateMatcher } from '../../../shared/utils/submitted-error-state-matcher';
 import { ClientsService } from '../../services/clients.service';
 
 export const CNPJ_MASK_PATTERN = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
@@ -24,10 +28,7 @@ export function maskCnpj(value: string): string {
     return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5)}`;
   }
   if (digits.length <= 12) {
-    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(
-      5,
-      8,
-    )}/${digits.slice(8)}`;
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8)}`;
   }
   return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(
     5,
@@ -56,8 +57,9 @@ export class ClientsFormComponent {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
-  /** ID é gerado automaticamente pelo banco — exibido apenas como leitura. */
   currentId: number | null = null;
+
+  readonly errorMatcher = new SubmittedErrorStateMatcher();
 
   form = this.fb.nonNullable.group({
     cnpj: ['', [Validators.required, Validators.pattern(CNPJ_MASK_PATTERN)]],
@@ -107,16 +109,15 @@ export class ClientsFormComponent {
 
   save(): void {
     if (this.form.invalid) {
+      this.errorMatcher.submitted = true;
       this.form.markAllAsTouched();
       return;
     }
 
     const { cnpj, companyName, email } = this.form.getRawValue();
-    this.clientsService
-      .create({ cnpj: cnpj.replace(/\D/g, ''), companyName, email })
-      .subscribe({
-        next: () => this.router.navigate(['/clientes']),
-      });
+    this.clientsService.create({ cnpj: cnpj.replace(/\D/g, ''), companyName, email }).subscribe({
+      next: () => this.router.navigate(['/clientes']),
+    });
   }
 
   cancel(): void {

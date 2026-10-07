@@ -17,16 +17,15 @@
             <input
               matInput
               id="id"
-              type="text"
+              type="number"
               [value]="currentId ?? ''"
               disabled
-              placeholder="Automático"
             />
           </mat-form-field>
         </div>
 
         <div class="field">
-          <label class="field-label" for="cnpj">CNPJ</label>
+          <label class="field-label is-required" for="cnpj">CNPJ</label>
           <div class="cnpj-line">
             <mat-form-field appearance="outline" class="field-material">
               <input
@@ -36,6 +35,7 @@
                 formControlName="cnpj"
                 placeholder="00.000.000/0000-00"
                 maxlength="18"
+                [errorStateMatcher]="errorMatcher"
                 (input)="onCnpjInput($event)"
               />
             </mat-form-field>
@@ -49,16 +49,16 @@
 
     <div class="row row-half">
       <div class="field">
-        <label class="field-label" for="companyName">RAZÃO SOCIAL</label>
+        <label class="field-label is-required" for="companyName">RAZÃO SOCIAL</label>
         <mat-form-field appearance="outline" class="field-material">
-          <input matInput id="companyName" type="text" formControlName="companyName" />
+          <input matInput id="companyName" type="text" formControlName="companyName" [errorStateMatcher]="errorMatcher" />
         </mat-form-field>
       </div>
 
       <div class="field">
-        <label class="field-label" for="email">E-MAIL</label>
+        <label class="field-label is-required" for="email">E-MAIL</label>
         <mat-form-field appearance="outline" class="field-material">
-          <input matInput id="email" type="email" formControlName="email" />
+          <input matInput id="email" type="email" formControlName="email" [errorStateMatcher]="errorMatcher" />
         </mat-form-field>
       </div>
     </div>

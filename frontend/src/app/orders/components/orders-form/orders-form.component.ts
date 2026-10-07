@@ -10,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ClientsService } from '../../../clients/services/clients.service';
 import { ProductsService, Product } from '../../../products/services/products.service';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { SubmittedErrorStateMatcher } from '../../../shared/utils/submitted-error-state-matcher';
 import { OrdersService, OrderPayload } from '../../services/orders.service';
 
 interface ClientOption {
@@ -43,6 +44,9 @@ export class OrdersFormComponent {
   clients = signal<ClientOption[]>([]);
   products = signal<Product[]>([]);
   serverError = signal('');
+
+  /** Borda vermelha de erro só aparece após tentar salvar. */
+  readonly errorMatcher = new SubmittedErrorStateMatcher();
 
   form = this.fb.group({
     clientId: [null as number | null, Validators.required],
@@ -116,6 +120,7 @@ export class OrdersFormComponent {
 
   save(): void {
     if (this.form.invalid || !this.items.length) {
+      this.errorMatcher.submitted = true;
       this.form.markAllAsTouched();
       return;
     }
