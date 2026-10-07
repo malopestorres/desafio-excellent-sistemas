@@ -11,10 +11,10 @@
   </div>
 
   <div class="table-wrapper">
-    <mat-table [dataSource]="clients" class="clients-table">
+    <mat-table [dataSource]="clients()" class="clients-table">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef class="col-id">ID</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-id cell-id">{{ client.id }}</mat-cell>
+        <mat-cell *matCellDef="let client" class="col-id cell-id">{{ formatId(client.id) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="companyName">
@@ -24,7 +24,7 @@
 
       <ng-container matColumnDef="cnpj">
         <mat-header-cell *matHeaderCellDef class="col-cnpj">CNPJ</mat-header-cell>
-        <mat-cell *matCellDef="let client" class="col-cnpj cell-cnpj">{{ client.cnpj }}</mat-cell>
+        <mat-cell *matCellDef="let client" class="col-cnpj cell-cnpj">{{ formatCnpj(client.cnpj) }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="email">
