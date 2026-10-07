@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -57,11 +57,15 @@ export class ClientsFormComponent {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
-  currentId: number | null = null;
-
   readonly errorMatcher = new SubmittedErrorStateMatcher();
 
-  form = this.fb.nonNullable.group({
+  duplicateIdError = signal('');
+
+  form = this.fb.group({
+    id: [
+      null as number | null,
+      [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
+    ],
     cnpj: ['', [Validators.required, Validators.pattern(CNPJ_MASK_PATTERN)]],
     companyName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -73,7 +77,7 @@ export class ClientsFormComponent {
   }
 
   searchCnpj(): void {
-    const cnpj = this.form.controls.cnpj.value.replace(/\D/g, '');
+    const cnpj = (this.form.controls.cnpj.value ?? '').replace(/\D/g, '');
     if (cnpj.length === 14) {
       this.clientsService.findByCnpj(cnpj).subscribe({
         next: (client) => {
@@ -114,10 +118,23 @@ export class ClientsFormComponent {
       return;
     }
 
-    const { cnpj, companyName, email } = this.form.getRawValue();
-    this.clientsService.create({ cnpj: cnpj.replace(/\D/g, ''), companyName, email }).subscribe({
-      next: () => this.router.navigate(['/clientes']),
-    });
+    const { id, cnpj, companyName, email } = this.form.getRawValue();
+    this.clientsService
+      .create({
+        id: Number(id),
+        cnpj: (cnpj ?? '').replace(/\D/g, ''),
+        companyName: companyName ?? '',
+        email: email ?? '',
+      })
+      .subscribe({
+        next: () => this.router.navigate(['/clientes']),
+        error: (err) => {
+          const message = err?.error?.message;
+          this.duplicateIdError.set(
+            Array.isArray(message) ? message[0] : (message ?? ''),
+          );
+        },
+      });
   }
 
   cancel(): void {

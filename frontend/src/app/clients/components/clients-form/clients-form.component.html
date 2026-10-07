@@ -11,17 +11,20 @@
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
     <div class="row">
       <div class="row-half">
-        <div class="field field-id">
-          <label class="field-label" for="id">ID</label>
+        <div class="field">
+          <label class="field-label is-required" for="id">ID</label>
           <mat-form-field appearance="outline" class="field-material">
             <input
               matInput
               id="id"
               type="number"
-              [value]="currentId ?? ''"
-              disabled
+              min="1"
+              formControlName="id"
+              [errorStateMatcher]="errorMatcher"
+              (input)="duplicateIdError.set('')"
             />
           </mat-form-field>
+          <span class="field-error" *ngIf="duplicateIdError()">{{ duplicateIdError() }}</span>
         </div>
 
         <div class="field">

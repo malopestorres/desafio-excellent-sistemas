@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface ClientPayload {
+  id: number;
   companyName: string;
   cnpj: string;
   email: string;

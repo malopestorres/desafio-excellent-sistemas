@@ -46,15 +46,6 @@ describe('ClientsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('exibe o campo ID automático (número, somente leitura) no cadastro', () => {
-    const idInput = fixture.nativeElement.querySelector('#id') as HTMLInputElement;
-
-    expect(idInput).toBeTruthy();
-    expect(idInput.disabled).toBe(true);
-    expect(idInput.type).toBe('number');
-    expect(component.currentId).toBeNull();
-  });
-
   it('marca os campos obrigatórios com asterisco', () => {
     const cnpjLabel = fixture.nativeElement.querySelector(
       'label[for="cnpj"]',
@@ -92,6 +83,7 @@ describe('ClientsFormComponent', () => {
 
   it('envia CNPJ sem pontuação', () => {
     component.form.setValue({
+      id: 1,
       cnpj: '12.345.678/0001-90',
       companyName: 'Empresa Teste Ltda.',
       email: 'teste@exemplo.com',
@@ -100,6 +92,7 @@ describe('ClientsFormComponent', () => {
     component.save();
 
     expect(clientsServiceMock.create).toHaveBeenCalledWith({
+      id: 1,
       cnpj: '12345678000190',
       companyName: 'Empresa Teste Ltda.',
       email: 'teste@exemplo.com',
@@ -140,6 +133,7 @@ describe('ClientsFormComponent', () => {
       throwError(() => new Error('404')),
     );
     component.form.setValue({
+      id: 1,
       cnpj: '12.345.678/0001-90',
       companyName: 'Empresa Teste Ltda.',
       email: 'teste@exemplo.com',
@@ -148,9 +142,10 @@ describe('ClientsFormComponent', () => {
     component.searchCnpj();
 
     expect(component.form.getRawValue()).toEqual({
-      cnpj: '',
-      companyName: '',
-      email: '',
+      id: null,
+      cnpj: null,
+      companyName: null,
+      email: null,
     });
   });
 });
