@@ -128,6 +128,18 @@
   }
 }
 
+.field-id {
+  flex: 0 0 240px;
+  max-width: 240px;
+}
+
+:host ::ng-deep .field-id .field-material {
+  .mdc-text-field--disabled .mdc-floating-label,
+  .mdc-text-field--disabled .mdc-text-field__input::placeholder {
+    color: #9ca3af;
+  }
+}
+
 .row-actions {
   display: flex;
   justify-content: flex-end;

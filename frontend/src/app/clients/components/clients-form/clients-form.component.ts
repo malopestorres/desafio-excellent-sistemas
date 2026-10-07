@@ -56,6 +56,9 @@ export class ClientsFormComponent {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
+  /** ID é gerado automaticamente pelo banco — exibido apenas como leitura. */
+  currentId: number | null = null;
+
   form = this.fb.nonNullable.group({
     cnpj: ['', [Validators.required, Validators.pattern(CNPJ_MASK_PATTERN)]],
     companyName: ['', Validators.required],

@@ -46,6 +46,14 @@ describe('ClientsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('exibe o campo ID read-only no cadastro', () => {
+    const idInput = fixture.nativeElement.querySelector('#id') as HTMLInputElement;
+
+    expect(idInput).toBeTruthy();
+    expect(idInput.disabled).toBe(true);
+    expect(component.currentId).toBeNull();
+  });
+
   it('formata CNPJ bruto com mask', () => {
     expect(maskCnpj('12345678000190')).toBe('12.345.678/0001-90');
   });

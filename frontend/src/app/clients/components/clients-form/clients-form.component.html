@@ -10,23 +10,39 @@
 
   <form class="form" [formGroup]="form" (ngSubmit)="save()">
     <div class="row">
-      <div class="field">
-        <label class="field-label" for="cnpj">CNPJ</label>
-        <div class="cnpj-line">
+      <div class="row-half">
+        <div class="field field-id">
+          <label class="field-label" for="id">ID</label>
           <mat-form-field appearance="outline" class="field-material">
             <input
               matInput
-              id="cnpj"
+              id="id"
               type="text"
-              formControlName="cnpj"
-              placeholder="00.000.000/0000-00"
-              maxlength="18"
-              (input)="onCnpjInput($event)"
+              [value]="currentId ?? ''"
+              disabled
+              placeholder="Automático"
             />
           </mat-form-field>
-          <button type="button" mat-flat-button class="btn-buscar" (click)="searchCnpj()">
-            BUSCAR
-          </button>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="cnpj">CNPJ</label>
+          <div class="cnpj-line">
+            <mat-form-field appearance="outline" class="field-material">
+              <input
+                matInput
+                id="cnpj"
+                type="text"
+                formControlName="cnpj"
+                placeholder="00.000.000/0000-00"
+                maxlength="18"
+                (input)="onCnpjInput($event)"
+              />
+            </mat-form-field>
+            <button type="button" mat-flat-button class="btn-buscar" (click)="searchCnpj()">
+              BUSCAR
+            </button>
+          </div>
         </div>
       </div>
     </div>
